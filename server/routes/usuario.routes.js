@@ -4,7 +4,9 @@ const path = require('path');
 const uuid = require('uuid/v4');
 const Usuario = require('../models/usuario.models')
 const router = Router();
-const bcrpyt = require('bcryptjs')
+const bcrpyt = require('bcryptjs');
+const Correo = require('../config/correo');
+const randomstring = require("randomstring");
 
 // ********** Configurando multer(subida de iamgenes) *************
 const storageUsuario = multer.diskStorage({
@@ -20,11 +22,13 @@ const storageUsuario = multer.diskStorage({
 router.post('/usuario', (req, res) => {
 
     let contenido = req.body;
+    let codigo = randomstring.generate(12);
 
     let usuario = new Usuario({
         nombre: contenido.nombre,
         correo: contenido.correo,
         password: bcrpyt.hashSync(contenido.password),
+        codigoRegistro: codigo,
         tipo: contenido.tipo,
         telefono: contenido.telefono,
         imagen: 'default.png'
@@ -38,6 +42,7 @@ router.post('/usuario', (req, res) => {
                 error: err
             });
         } else {
+            Correo.enviarCorreo({ username: contenido.nombre, code: codigo }, contenido.correo)
             return res.status(200).json({
                 ok: true,
                 usuario
@@ -45,6 +50,37 @@ router.post('/usuario', (req, res) => {
         };
     });
 });
+
+
+//*********** Verificar usuario **************** */
+
+router.put('/usuario/verificar/:id', (req, res) => {
+
+    let id = req.params.id;
+    let contenido = req.body;
+
+    Usuario.findOneAndUpdate({ _id: id, codigoRegistro: contenido.codigoRegistro }, { estado: 'activo' }, { new: true }, (errr, usuario) => {
+        if (errr) {
+            return res.status(400).json({
+                ok: false,
+                mensaje: 'El codigo no es el correcto',
+                error: errr
+            });
+        } else {
+            res.status(200).json({
+                ok: true,
+                usuario
+            });
+        };
+    });
+
+
+
+})
+
+
+
+
 
 
 // **********  Obtener todos los usuarios ****************

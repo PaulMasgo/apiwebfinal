@@ -19,10 +19,9 @@ router.get('/producto', (req, res) => {
                     error: err
                 });
             } else {
-                res.status(200).json({
-                    ok: true,
-                    Productos: productos,
-                    Total: productos.length
+                res.json({
+                    res:true,
+                    Productos:productos
                 });
             };
         });

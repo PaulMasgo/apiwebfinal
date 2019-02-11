@@ -7,5 +7,8 @@ router.use(require('./imagen.routes'));
 router.use(require('./producto.routes'));
 router.use(require('./categoria.routes'));
 router.use(require('./talla.routes'));
+router.use(require('./favorito.routes'));
+router.use(require('./ubigeo.routes'));
+router.use(require('./direccion.routes'))
 
 module.exports = router;

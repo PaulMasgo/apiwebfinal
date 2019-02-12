@@ -10,7 +10,7 @@ router.post('/venta',(req,res)=>{
         boleta:usuario.boleta
     });
 
-    Venta.save((err,data)=>{
+    venta.save((err,data)=>{
         if(err){
             res.json({
                 ok: false,
@@ -42,4 +42,23 @@ router.get('/venta/:id',(req,res)=>{
             });
         };
     })
-})
+});
+
+router.get('/venta',(req,res)=>{
+    Venta.find((err,data)=>{
+        if(err){
+            res.json({
+                ok: false,
+                message:'No se pudo completar la operacion',
+                error: err
+            });
+        }else{
+            res.json({
+                ok: true,
+                venta: data
+            });
+        };
+    })
+});
+
+module.exports = router;

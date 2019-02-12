@@ -9,6 +9,8 @@ router.use(require('./categoria.routes'));
 router.use(require('./talla.routes'));
 router.use(require('./favorito.routes'));
 router.use(require('./ubigeo.routes'));
-router.use(require('./direccion.routes'))
+router.use(require('./direccion.routes'));
+router.use(require('./venta.routes'));
+router.use(require('./detalleVenta.routes'));
 
 module.exports = router;

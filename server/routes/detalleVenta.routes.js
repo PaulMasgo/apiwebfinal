@@ -8,8 +8,8 @@ router.post('/detalleventa',(req,res)=>{
         venta:contenido.venta,
         precio:contenido.precio,
         cantidad:contenido.cantidad,
-        producto:contenido.precio,
-        descuento:contenido.descuento
+        producto:contenido.producto,
+        talla:contenido.talla
     });
 
     detalle.save((err,data)=>{

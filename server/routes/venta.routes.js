@@ -1,13 +1,17 @@
 const {Router} = require('express');
 const router = Router();
+const shortUniqueId = require('short-unique-id');
+const uid = new shortUniqueId();
 const Venta = require('../models/venta.model')
 
 router.post('/venta',(req,res)=>{
     let contenido = req.body;
     let venta = new Venta({
         Fecha:contenido.Fecha,
-        usuario:usuario.usuario,
-        boleta:usuario.boleta
+        usuario:contenido.usuario,
+        boleta:contenido.boleta,
+        codigo: (uid.randomUUID(6)).toLocaleLowerCase,
+        descuento:contenido.descuento
     });
 
     venta.save((err,data)=>{
@@ -60,5 +64,7 @@ router.get('/venta',(req,res)=>{
         };
     })
 });
+
+
 
 module.exports = router;

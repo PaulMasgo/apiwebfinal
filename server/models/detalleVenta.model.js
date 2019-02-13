@@ -7,7 +7,7 @@ let detalleEsquema = new esquema({
     precio:{type:Number,required:[true,'El dato es nesesario']},
     cantidad:{type:Number,required:[true,'el dato es nesesario']},
     producto:{type:esquema.Types.ObjectId,ref:'Producto',required:[true,'El dato es nesesario']},
-    descuento:{type:Number}
+    talla:{type:String}
 });
 
 module.exports = mongoose.model('DetalleVenta',detalleEsquema);

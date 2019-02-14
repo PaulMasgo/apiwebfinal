@@ -7,7 +7,9 @@ let ventaEsquema = new esquema({
     usuario:{type:esquema.Types.ObjectId,ref:'usuario',required:[true,'Este dato es ensesario']},
     boleta:{type:String},
     codigo:{type:String,required:[true,'el codigo esnesesario']},
-    descuento:{type:Number}
+    descuento:{type:Number},
+    estado:{type:String,default:'espera'},
+    monto:{type:Number,required:[true,'El monto esnesesario']}
 });
 
 module.exports = mongoose.model('Venta',ventaEsquema);

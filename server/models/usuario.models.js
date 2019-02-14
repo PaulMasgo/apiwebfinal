@@ -12,6 +12,7 @@ let usuarioEsquema = new esquema({
     correo: { type: String, unique: true, required: [true, 'El correo es nesesario'] },
     password: { type: String, required: [true, 'La contraseña no puede quedar vacia'] },
     telefono: { type: String },
+    telefono2: { type: String },
     imagen: { type: String },
     codigoRegistro: { type: String },
     google: { type: Boolean, default: false },

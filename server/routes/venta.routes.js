@@ -10,8 +10,9 @@ router.post('/venta',(req,res)=>{
         Fecha:contenido.Fecha,
         usuario:contenido.usuario,
         boleta:contenido.boleta,
-        codigo: (uid.randomUUID(6)).toLocaleLowerCase,
-        descuento:contenido.descuento
+        codigo: (uid.randomUUID(6)).toLocaleLowerCase(),
+        descuento:contenido.descuento,
+        monto:contenido.monto,
     });
 
     venta.save((err,data)=>{
@@ -32,7 +33,9 @@ router.post('/venta',(req,res)=>{
 
 router.get('/venta/:id',(req,res)=>{
     let id = req.params.id;
-    Venta.findOne({_id:id},(err,data)=>{
+    Venta.findOne({_id:id})
+          .populate('')
+          .exec((err,data)=>{
         if(err){
             res.json({
                 ok: false,

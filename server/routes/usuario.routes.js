@@ -52,6 +52,33 @@ router.post('/usuario', (req, res) => {
 });
 
 
+//************ Actualizar Usuario *****************  */
+
+router.put('/usuario/:id',(req,res)=>{
+    let contenido = req.body;
+    let id = req.params.id;
+    let user = {
+        nombre: contenido.nombre,
+        telefono:  contenido.telefono,
+        telefono2: contenido.telefono2,
+    };
+    Usuario.findOneAndUpdate({_id:id},user,{new:true},(err,data)=>{
+        if (err) {
+            return res.status(400).json({
+                ok: false,
+                mensaje: 'Error al actualizar usuario',
+                error: err
+            });
+        } else {
+            return res.status(200).json({
+                ok: true,
+                usuario:data
+            });
+        };
+    });
+});
+
+
 //*********** Verificar usuario **************** */
 
 router.put('/usuario/verificar/:id', (req, res) => {

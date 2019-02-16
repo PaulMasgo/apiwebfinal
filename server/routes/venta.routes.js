@@ -34,8 +34,8 @@ router.post('/venta',(req,res)=>{
 
 router.get('/venta/:id',(req,res)=>{
     let id = req.params.id;
-    Venta.findOne({_id:id})
-          .populate('Direccion')
+    Venta.find({usuario:id})
+          .populate('direccion')
           .exec((err,data)=>{
         if(err){
             res.json({

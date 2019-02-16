@@ -7,7 +7,8 @@ let direccionesquema = new esquema({
     Referencia:{type:String},
     Tipo:{type:String,required:[true,'Es nesesario indicar el tipo']},
     Ubigeo:{type:esquema.Types.ObjectId,ref:'Ubigeo',required:[true,'El dato es nesesario']},
-    Usuario:{type:esquema.Types.ObjectId,ref:'Usuario',required:[true,'El dato es nesesario']}
+    Usuario:{type:esquema.Types.ObjectId,ref:'Usuario',required:[true,'El dato es nesesario']},
+    estado:{type:String,default:'Activo'}
 })
 
 module.exports = mongoose.model('Direccion',direccionesquema);

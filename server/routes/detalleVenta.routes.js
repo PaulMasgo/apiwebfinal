@@ -28,9 +28,15 @@ router.post('/detalleventa',(req,res)=>{
     });
 });
 
+
+
+
+
 router.get('/detalle/:venta',(req,res)=>{
     let venta = req.params.venta;
-    Detalle.find({venta:venta},(err,data)=>{
+    Detalle.find({venta:venta})
+    .populate('producto')
+    .exec((err,data)=>{
         if(err){
             res.json({
                 ok: false,

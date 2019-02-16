@@ -28,9 +28,57 @@ router.post('/direccion',(req,res)=>{
     });
 });
 
+router.put('/direccion/:id',(req,res)=>{
+    let id = req.params.id;
+    let contenido = req.body;   
+    let direccion = {
+        Direccion:contenido.Direccion,
+        Referencia:contenido.Referencia,
+        Tipo:contenido.Tipo,
+        Ubigeo:contenido.Ubigeo,
+        Usuario:contenido.Usuario
+    };
+
+    Direccion.findOneAndUpdate({_id:id},direccion,{new:true},(err,data)=>{
+        if(err){
+            res.json({
+                ok: false,
+                message:'No se pudo completar la operacion',
+                error: err
+            });
+        }else{
+            res.json({
+                ok: true,
+                direccion: data
+            });
+        };
+    });
+});
+
+router.get('/direccion/una/:id',(req,res)=>{
+    let id = req.params.id;
+    Direccion.findOne({_id:id})
+                .populate('Ubigeo')
+                .exec((err,data)=>{
+                    if(err){
+                        res.json({
+                            ok: false,
+                            message:'No se pudo completar la operacion',
+                            error: err
+                        });
+                    }else{
+                        res.json({
+                            ok: true,
+                            direccion: data
+                        });
+                    };
+                });   
+});
+
+
 router.get('/direccion/:usuario',(req,res)=>{
     let usuario = req.params.usuario;
-    Direccion.find({Usuario:usuario})
+    Direccion.find({Usuario:usuario,estado:'Activo'})
                 .populate('Ubigeo')
                 .exec((err,data)=>{
                     if(err){
@@ -50,12 +98,9 @@ router.get('/direccion/:usuario',(req,res)=>{
 });
 
 
-router.delete('/direcciom/:id',(req,res)=>{
+router.delete('/direccion/:id',(req,res)=>{
     let direccion = req.params.id;
-    Direccion.findByIdAndRemove({_id:direccion},(err,data)=>{
-        router.get('/direccion/:usuario',(req,res)=>{
-            let usuario = req.params.usuario;
-            Direccion.find({Usuario:usuario},(err,data)=>{
+    Direccion.findByIdAndUpdate({_id:direccion},{estado:'Inactivo'},(err,data)=>{
             if(err){
                 res.json({
                     ok: false,
@@ -70,7 +115,5 @@ router.delete('/direcciom/:id',(req,res)=>{
             };
            });
         });
-    })
-});
 
 module.exports = router;

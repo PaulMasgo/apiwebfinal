@@ -51,4 +51,25 @@ router.get('/talla/:id', (req, res) => {
     });
 });
 
+//***************  Descontar cantida de tallas  ****************/
+router.put('/talla/cantidad/:id',(req,res)=>{
+    let id = req.params.id;
+    let contenido = req.body
+    Talla.findOneAndUpdate({_id:id},{cantidad:contenido.cantidad},{new:true},(err,data)=>{
+        if (err) {
+            return res.status(400).json({
+                ok: false,
+                mensaje: 'Error al actualizar la talla',
+                error: err
+            });
+        } else {
+            res.status(200).json({
+                ok: true,
+                data
+            });
+        };
+    });
+});
+
+
 module.exports = router;

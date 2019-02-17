@@ -12,5 +12,6 @@ router.use(require('./ubigeo.routes'));
 router.use(require('./direccion.routes'));
 router.use(require('./venta.routes'));
 router.use(require('./detalleVenta.routes'));
+router.use(require('./pago.routes'))
 
 module.exports = router;

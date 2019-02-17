@@ -3,6 +3,15 @@ const router = Router();
 const shortUniqueId = require('short-unique-id');
 const uid = new shortUniqueId();
 const Venta = require('../models/venta.model')
+const correo = require('../config/correoVenta');
+const usuario = require('../models/usuario.models')
+
+let enviarcorreo = (id,monto)=>{
+    usuario.findOne({_id:id},(err,data)=>{
+      correo.enviarCorreo({monto: monto}, data.correo)
+    })
+}
+
 
 router.post('/venta',(req,res)=>{
     let contenido = req.body;
@@ -10,13 +19,14 @@ router.post('/venta',(req,res)=>{
         Fecha:contenido.Fecha,
         usuario:contenido.usuario,
         boleta:contenido.boleta,
-        codigo: (uid.randomUUID(6)).toLocaleLowerCase(),
+        codigo: (uid.randomUUID(6)).toUpperCase(),
         descuento:contenido.descuento,
         monto:contenido.monto,
         direccion:contenido.direccion
     });
 
     venta.save((err,data)=>{
+        enviarcorreo(data.usuario,data.monto);
         if(err){
             res.json({
                 ok: false,
@@ -24,6 +34,7 @@ router.post('/venta',(req,res)=>{
                 error: err
             });
         }else{
+            
             res.json({
                 ok: true,
                 venta: data

@@ -7,6 +7,8 @@ let transporteer = nodemailer.createTransport({
     auth: {
         user: 'cresspotiendas@gmail.com',
         pass: 'modular2018'
+    },tls: {
+        rejectUnauthorized: false
     }
 });
 
@@ -28,9 +30,9 @@ exports.enviarCorreo = (data, para) => {
 
     enviarmensaje(para, 'verficacion de usuario', html, (err, resp) => {
         if (err) {
-            console.log('ERROR!');
+            console.log(err);
             return
-        } {
+        } else{
             console.log('Correo Enviado');
         }
     });

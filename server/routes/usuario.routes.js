@@ -107,12 +107,35 @@ router.put('/usuario/verificar/:id', (req, res) => {
 
 
 
+////////////
+
+router.get('/usuario/buscar/:params', (req, res) => {
+
+    let letra = req.params.params;
+    let regex = new RegExp(letra, 'i');
+
+    Usuario.find({ nombre: regex })
+        .exec((err, data) => {
+            if (err) {
+                return res.status(500).json({
+                    ok: false,
+                    mensaje: 'Error cargando productos',
+                    error: err
+                });
+            } else {
+                res.status(200).json({
+                    ok: true,
+                    usuarios: data
+                });
+            };
+        })
+});
 
 
 
 // **********  Obtener todos los usuarios ****************
 router.get('/usuario', (req, res) => {
-    Usuario.find({ estado: true }, 'nombre correo imagen')
+    Usuario.find()
         .exec((err, usuarios) => {
             if (err) {
                 return res.status(500).json({
@@ -121,7 +144,7 @@ router.get('/usuario', (req, res) => {
                     error: err
                 });
             } else {
-                return res.status(200).json({
+                res.status(200).json({
                     ok: true,
                     usuarios
                 });

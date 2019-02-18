@@ -9,7 +9,6 @@ router.get('/producto', (req, res) => {
 
     Producto.find({ estado: true })
         .skip(desde)
-        .limit(12)
         .populate('categoria imagen')
         .exec((err, productos) => {
             if (err) {
@@ -21,7 +20,8 @@ router.get('/producto', (req, res) => {
             } else {
                 res.json({
                     res:true,
-                    Productos:productos
+                    Productos:productos,
+                    Total: productos.length
                 });
             };
         });
@@ -121,7 +121,7 @@ router.put('/producto/:id', (req, res) => {
         nombre: contenido.nombre,
         descripcion: contenido.descripcion,
         precio: contenido.precio,
-        cantidad: contenido.cantidad,
+        color: contenido.color,
         categoria: contenido.categoria
     };
 

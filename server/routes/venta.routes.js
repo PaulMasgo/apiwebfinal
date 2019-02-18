@@ -80,6 +80,44 @@ router.get('/venta',(req,res)=>{
     })
 });
 
+router.get('/verventa/:id',(req,res)=>{
+    let id = req.params.id;
+    Venta.findOne({_id:id})
+          .populate('direccion usuario')
+          .exec((err,data)=>{
+        if(err){
+            res.json({
+                ok: false,
+                message:'No se pudo completar la operacion',
+                error: err
+            });
+        }else{
+            res.json({
+                ok: true,
+                venta: data
+            });
+        };
+    })
+});
 
+
+router.put('/venta/:id',(req,res)=>{
+    let id = req.params.id;
+    let contenido = req.body;
+    Venta.findOneAndUpdate({_id:id},{estado:contenido.estado},{new:true},(err,data)=>{
+        if(err){
+            res.json({
+                ok: false,
+                message:'No se pudo completar la operacion',
+                error: err
+            });
+        }else{
+            res.json({
+                ok: true,
+                venta: data
+            });
+        };
+    })
+});
 
 module.exports = router;

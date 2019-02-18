@@ -7,6 +7,8 @@ let transporteer = nodemailer.createTransport({
     auth: {
         user: 'cresspotiendas@gmail.com',
         pass: 'modular2018'
+    },tls: {
+        rejectUnauthorized: false
     }
 });
 

@@ -10,7 +10,8 @@ let ventaEsquema = new esquema({
     descuento:{type:Number},
     estado:{type:String,default:'espera'},
     monto:{type:Number,required:[true,'El monto es nesesario']},
-    direccion:{type:esquema.Types.ObjectId,ref:'Direccion',required:[true,'La direccion es nesesaria']}
+    direccion:{type:esquema.Types.ObjectId,ref:'Direccion',required:[true,'La direccion es nesesaria']},
+    tipo:{type:String,required:[true,'La direccion es nesesaria']}
 });
 
 module.exports = mongoose.model('Venta',ventaEsquema);

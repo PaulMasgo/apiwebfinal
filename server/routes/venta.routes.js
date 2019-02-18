@@ -22,10 +22,12 @@ router.post('/venta',(req,res)=>{
         codigo: (uid.randomUUID(6)).toUpperCase(),
         descuento:contenido.descuento,
         monto:contenido.monto,
-        direccion:contenido.direccion
+        direccion:contenido.direccion,
+        tipo:contenido.tipo,
     });
 
     venta.save((err,data)=>{
+        console.log(data);
         enviarcorreo(data.usuario,data.monto);
         if(err){
             res.json({

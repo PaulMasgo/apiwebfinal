@@ -13,5 +13,6 @@ router.use(require('./direccion.routes'));
 router.use(require('./venta.routes'));
 router.use(require('./detalleVenta.routes'));
 router.use(require('./pago.routes'));
+router.use(require('./cupon.routes'))
 
 module.exports = router;

@@ -69,9 +69,8 @@ router.get('/producto/:id', (req, res) => {
 });
 
 router.get('/producto/categoria/:categoria', (req, res) => {
-
     let categoriaElejida = req.params.categoria;
-    Producto.find({ categoria: categoriaElejida })
+    Producto.find({ categoria: categoriaElejida,estado: true })
         .populate('imagen categoria')
         .exec((err, producto) => {
             if (err) {
@@ -80,8 +79,22 @@ router.get('/producto/categoria/:categoria', (req, res) => {
                 res.json(producto)
             }
         })
-
 });
+
+router.get('/producto/color/:color', (req, res) => {
+    let colorselect = req.params.color;
+    Producto.find({ color: colorselect,estado: true })
+        .populate('imagen categoria')
+        .exec((err, producto) => {
+            if (err) {
+                res.json(err)
+            } else {
+                res.json(producto)
+            }
+        })
+});
+
+
 
 router.post('/producto', (req, res) => {
     let contenido = req.body;
